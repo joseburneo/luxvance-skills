@@ -1,0 +1,9 @@
+{
+  "name": "luxvance",
+  "version": "0.2.0",
+  "description": "Luxvance internal toolkit — brand voice & visual identity, Notion task creation, Client Intelligence Library sync (Notion → Supabase), campaign intelligence analysis, and campaign-builder co-pilot for outbound strategy.",
+  "author": {
+    "name": "Luxvance",
+    "email": "jose@luxvance.com"
+  }
+}

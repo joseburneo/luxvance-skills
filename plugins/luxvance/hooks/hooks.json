@@ -1,0 +1,14 @@
+{
+  "SessionStart": [
+    {
+      "matcher": "",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo 'Luxvance brand is active. Tagline: \"Precision Leads. Engineered by Intelligence.\" Visual: Gold #C9A84C, Black #1A1A1A, Cream #F5F0E8. Headings: Playfair Display. Body: Montserrat. Voice rules (apply to ALL text, always): no em-dashes, CEFR B1-B2 English, mirror the length of the prospect reply, professional but friendly + empathetic + charismatic, no buzzwords, no flattery. Full rules in the brand-guidelines skill.'",
+          "timeout": 5
+        }
+      ]
+    }
+  ]
+}
