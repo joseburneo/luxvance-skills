@@ -127,15 +127,60 @@ Default to the language the user is writing in (Spanish or English). If the user
 
 ## Saving Deliverables — Client Folders
 
-Every document, presentation, spreadsheet, PDF, image, or report you create **for a client** must be saved inside that client's folder in the Luxvance workspace:
+Every document, presentation, spreadsheet, PDF, image, or report created **for a client** must be saved to the Luxvance AI Workspace **shared Google Drive**, not to personal Drive or to Cowork's ephemeral outputs folder.
 
-**Path:** `Luxvance AI Workspace/Clients/<Client Name>/` (use the exact folder name — current clients include CAMB.AI, CapQuest, Global Food Ventures, Insurance Market, Kcal, Remly).
+### The ONLY correct save location
 
-- Use an existing sub-folder inside the client (like `Reports/` or `Proposals/`) if one fits; otherwise save at the client's root.
-- **Never claim a file is saved without verifying it.** After writing, list the destination directory and confirm the file is there. Report the exact absolute path back to the user.
-- **If you are not sure which client the deliverable belongs to, ask.** Do not pick a default.
-- Internal Luxvance work (not client-specific) goes in `Business Development/` or another workspace folder that fits.
-- **Never use Cowork's ephemeral `outputs/` folder for client deliverables.** It's not shared with the team.
+```
+/sessions/*/mnt/Luxvance AI Workspace/Clients/<Client Name>/<filename>
+```
+
+### Before saving: verify the shared Drive is mounted
+
+Run:
+
+```
+ls "/sessions/"*"/mnt/Luxvance AI Workspace/Clients/"
+```
+
+You should see the client folders: `CAMB.AI`, `CapQuest`, `Global Food Ventures`, `Insurance Market`, `Kcal`, `Remly`. If you see them, proceed to save at that absolute path. If the listing fails or is empty, the workspace is NOT mounted — STOP and tell the user:
+
+> "I can't find the Luxvance AI Workspace shared Drive mounted in this session. Please start a new chat and select `Luxvance AI Workspace` from your Google Drive Shared Drives as the workspace."
+
+Do not fall back to any other location.
+
+### Paths you MUST NEVER use for client deliverables
+
+- `/sessions/*/mnt/outputs/` — Cowork's ephemeral outputs folder. Files here are session-scoped and on each team member's machine they sync to their **personal** Google Drive, not the shared one.
+- `$HOME/...`, `~/...` — personal file system, user-specific, not shared.
+- Any path outside `/sessions/*/mnt/Luxvance AI Workspace/` — won't reach the team.
+- `computer://` download links pointed at `outputs/` — those are not the shared Drive. Don't use them for client deliverables.
+
+### After every save — mandatory verification
+
+1. Run `ls -la` on the destination directory.
+2. Confirm the filename appears with a non-zero size.
+3. Report the **human-readable** path back to the user so they can find it in Finder:
+   > "Saved to `Luxvance AI Workspace/Clients/<Client>/<filename>` in the shared Google Drive."
+4. If the file does NOT appear, STOP. Say the save failed. Do NOT claim success and do NOT try a fallback path.
+
+### If the client folder doesn't exist yet
+
+Create it inside the workspace:
+
+```
+mkdir -p "/sessions/"*"/mnt/Luxvance AI Workspace/Clients/<New Client Name>/"
+```
+
+Then save inside.
+
+### Internal Luxvance work (non-client)
+
+Goes in `/sessions/*/mnt/Luxvance AI Workspace/Business Development/` or another workspace folder that clearly fits. Same verification rules.
+
+### Which client is this for?
+
+Use the exact folder name from `Clients/` — do not abbreviate or translate. If you are not sure which client the deliverable belongs to, ASK. Do not guess.
 
 ---
 
