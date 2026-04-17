@@ -50,14 +50,16 @@ Use on cover pages, title slides, proposal headers, and signature blocks when co
 
 ### Logo usage
 
-Logo files live in `04_Brand_and_Assets/logos/` of the Luxvance workspace:
+Logo files live in `Luxvance/logos/` of the Luxvance workspace (Google Drive shared drive mounted as the workspace root).
 
 | Situation | File |
 |---|---|
 | Cover pages, title slides | `Luxvance Logo 1.png` (primary) |
 | Decorative accent | `Luxvance Logo 2.png` (LUX block) |
-| Footers, corners, compact spaces | `Luxvance Short Logo 2.png` (LV logomark) |
+| Footers, corners, compact spaces | `Luxvance Short Logo 2 .png` (LV logomark — note the space before `.png` in the filename) |
 | Watermark / subtle accent | `Luxvance Short Logo 1.png` (LV monogram) |
+
+If the logo files are not accessible (workspace not mounted, or files missing), fall back to a typographic **LUXVANCE** wordmark set in Playfair Display Bold, in Luxvance Gold (`#C9A84C`) on the appropriate background.
 
 - Always include clear space equal to the height of the letter "L".
 - Never stretch, rotate, recolor, or add effects to the logo.
@@ -120,6 +122,20 @@ Default to the language the user is writing in (Spanish or English). If the user
 - Luxury + precision positioning. Think premium advisory firm, not agency bro.
 - Confident and precise — never verbose or casual.
 - Avoid filler phrases. Every sentence must carry weight.
+
+---
+
+## Saving Deliverables — Client Folders
+
+Every document, presentation, spreadsheet, PDF, image, or report you create **for a client** must be saved inside that client's folder in the Luxvance workspace:
+
+**Path:** `Luxvance AI Workspace/Clients/<Client Name>/` (use the exact folder name — current clients include CAMB.AI, CapQuest, Global Food Ventures, Insurance Market, Kcal, Remly).
+
+- Use an existing sub-folder inside the client (like `Reports/` or `Proposals/`) if one fits; otherwise save at the client's root.
+- **Never claim a file is saved without verifying it.** After writing, list the destination directory and confirm the file is there. Report the exact absolute path back to the user.
+- **If you are not sure which client the deliverable belongs to, ask.** Do not pick a default.
+- Internal Luxvance work (not client-specific) goes in `Business Development/` or another workspace folder that fits.
+- **Never use Cowork's ephemeral `outputs/` folder for client deliverables.** It's not shared with the team.
 
 ---
 
