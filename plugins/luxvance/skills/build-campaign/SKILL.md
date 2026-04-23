@@ -55,9 +55,9 @@ Lean, paste-ready, production-grade.
 | Skill | Purpose | When it runs |
 |---|---|---|
 | `campaign-intelligence` | Analyst. Reads past campaigns, surfaces patterns. | Before `build-campaign`. |
-| `campaign-builder` | Strategist. Produces 2 A/B hypotheses. | Optional. Before `build-campaign` if Jose wants formal A/B. |
-| **`build-campaign`** | **Production engineer. Ships the paste-ready kit.** | **After strategy is clear (from Jose's head or from the sibling skills).** |
-| `library-sync` | Syncs Notion Library to Supabase. | Before `build-campaign` if `library_data` is stale. |
+| **`build-campaign`** | **Production engineer. Ships the paste-ready kit.** | **After strategy is clear (from Jose's head or from `campaign-intelligence`).** |
+
+The Client Intelligence Library (Notion to Supabase) sync runs as an automated Render cron, not as a skill. If `library_data` looks stale, ping the Agency OS operator.
 
 Build Campaign is the last mile.
 
