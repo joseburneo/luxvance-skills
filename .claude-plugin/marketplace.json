@@ -8,8 +8,8 @@
     {
       "name": "luxvance",
       "source": "./plugins/luxvance",
-      "description": "Luxvance internal toolkit \u2014 brand voice & visual identity, Notion task creation, Client Intelligence Library sync (Notion \u2192 Supabase), campaign intelligence analysis, campaign-builder co-pilot for outbound strategy, build-campaign production engineer for paste-ready Clay and Instantly assets, and Instantly reply copilot for human-in-the-loop inbox triage.",
-      "version": "0.3.0"
+      "description": "Luxvance internal toolkit \u2014 brand voice & visual identity, Notion task creation, campaign intelligence analysis, campaign-builder co-pilot for outbound strategy, build-campaign production engineer for paste-ready Clay and Instantly assets, and Instantly reply copilot for human-in-the-loop inbox triage. Client Intelligence Library sync (Notion \u2192 Supabase) runs as an automated Render cron, not as a skill.",
+      "version": "0.3.1"
     }
   ]
 }
