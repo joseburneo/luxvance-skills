@@ -105,6 +105,69 @@ When the user provides background (who requested it, why, what success looks lik
 
 If the request is a one-liner ("make a task for Marko on Luxvance: renew the domain next Tuesday"), **skip the structured body** — the title alone is enough, and forcing structure where there isn't any wastes everyone's time.
 
+## Special case: campaign-build tasks
+
+When the task is to build and launch an outbound campaign (i.e., the task is paired with output from `build-campaign`), use the **9-block kit shape** as the body, not the generic `Requested by / Ask / Goal / Scope` format.
+
+The 9 blocks (in this exact order):
+
+```
+**Requested by:** <name>
+
+**Ask:** Build and launch <campaign name>. Step 1 only unless the kit specifies otherwise.
+
+**Goal:** <one sentence on why this campaign exists>
+
+**Scope:**
+- Campaign name in Instantly: `<name>`
+- Volume target, region, persona filter, exclusions, currency
+
+## Campaign brief
+<one paragraph, ≤60 words, copy verbatim from the build-campaign output>
+
+## Rendered email
+<Subject + body, plain markdown, copy verbatim>
+
+## Clay — Company filter (Sculpture)
+\`\`\`
+<paste the Sculpture prompt verbatim>
+\`\`\`
+
+## Clay — People filter (Sculpture)
+\`\`\`
+<paste verbatim>
+\`\`\`
+
+## Clay — Variable 1 prompt
+\`\`\`
+<paste verbatim>
+\`\`\`
+
+## Clay — Variable 2 prompt
+\`\`\`
+<paste verbatim>
+\`\`\`
+
+## Instantly — Subject spintax
+\`\`\`
+<paste verbatim>
+\`\`\`
+
+## Instantly — Body spintax
+\`\`\`
+<paste verbatim>
+\`\`\`
+
+## Acceptance criteria
+- Lead list verified through MillionVerifier before push to Instantly
+- Variable 1 and Variable 2 spot-checked on first 25 leads
+- Subject and body spintax pasted exactly as above
+- Daily send cap respects domain warm-up state
+- Step 1 only unless the kit specifies otherwise
+```
+
+This shape matches the build-campaign skill output exactly. Marko or Ana paste blocks 4-7 into Clay and blocks 8-9 into Instantly. No re-formatting required.
+
 ## Examples
 
 ### Example 1 — rich context
