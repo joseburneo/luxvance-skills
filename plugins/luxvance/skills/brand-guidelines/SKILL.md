@@ -143,7 +143,7 @@ Run:
 ls "/sessions/"*"/mnt/Luxvance AI Workspace/Clients/"
 ```
 
-You should see the client folders: `CAMB.AI`, `CapQuest`, `Global Food Ventures`, `Insurance Market`, `Kcal`, `Remly`. If you see them, proceed to save at that absolute path. If the listing fails or is empty, the workspace is NOT mounted — STOP and tell the user:
+You should see the client folders: `CapQuest`, `Connect Resources`, `Global Food Ventures`, `Kcal`, `Luxvance`, `Remly`. If you see them, proceed to save at that absolute path. If the listing fails or is empty, the workspace is NOT mounted — STOP and tell the user:
 
 > "I can't find the Luxvance AI Workspace shared Drive mounted in this session. Please start a new chat and select `Luxvance AI Workspace` from your Google Drive Shared Drives as the workspace."
 

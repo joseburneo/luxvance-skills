@@ -64,7 +64,7 @@ Examples:
 - `CapQuest × Luxvance · Discovery (Marco Banfi)`
 - `Connect Resources × Luxvance · Discovery (Liam Doherty)`
 
-If a prospect has only one name, use it alone. If a company is two words, keep it as is (e.g. `Connect Resources`, `Insurance Market`).
+If a prospect has only one name, use it alone. If a company is two words, keep it as is (e.g. `Connect Resources`).
 
 ## Default description block
 

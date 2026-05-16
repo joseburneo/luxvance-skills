@@ -8,8 +8,8 @@
     {
       "name": "luxvance",
       "source": "./plugins/luxvance",
-      "description": "Luxvance internal toolkit. Brand voice and visual identity, Notion task creation, campaign intelligence analysis with locked-hypothesis handoff, build-campaign production engineer that ships a 9-block paste-ready kit for Clay and Instantly (campaign brief, rendered email, Sculpture filters, Variable prompts, subject and body spintax), discovery-call booking with the Luxvance calendar conventions, and make-invoice that renders branded AED invoices for the client roster (CapQuest, Camb.ai, Kcal World, GFV) with Stripe and ZATCA blocks where applicable. Client Intelligence Library sync (Notion to Supabase) runs as an automated Render cron, not as a skill.",
-      "version": "0.4.7"
+      "description": "Luxvance internal toolkit. Brand voice and visual identity, Notion task creation, campaign intelligence analysis with locked-hypothesis handoff, build-campaign production engineer that ships a 9-block paste-ready kit for Clay and Instantly (campaign brief, rendered email, Sculpture filters, Variable prompts, subject and body spintax), discovery-call booking with the Luxvance calendar conventions, make-invoice that renders branded AED invoices for the client roster (CapQuest, Kcal, GFV) with Stripe and ZATCA blocks where applicable, and cleanup-completed-campaigns that frees Instantly contact-quota by removing no-reply leads from finished or paused campaigns while preserving every replier. Client Intelligence Library sync (Notion to Supabase) runs as an automated Render cron, not as a skill.",
+      "version": "0.4.8"
     }
   ]
 }

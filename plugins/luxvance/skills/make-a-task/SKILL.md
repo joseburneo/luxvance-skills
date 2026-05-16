@@ -1,6 +1,6 @@
 ---
 name: make-a-task
-description: Create a task in the Luxvance Notion Tasks database for Marko, Ana María, or Jose, linked to a client. Use this skill whenever the user says "make a task", "create a task", "new task", "add a task", or describes an action item for a specific person on a specific client in their Notion workspace. Trigger even if the user doesn't say the word "Notion" — any time Jose assigns work to his team (Marko, Ana María, himself) for a client (Global Food Ventures, Kcal Lunch, CapQuest, Connect Resources, Luxvance, Remly, Insurance Market, Qureos, etc.), this skill applies. Also trigger on Spanish phrasings like "haz una tarea", "crea una tarea", "añade una tarea".
+description: Create a task in the Luxvance Notion Tasks database for Marko, Ana María, or Jose, linked to a client. Use this skill whenever the user says "make a task", "create a task", "new task", "add a task", or describes an action item for a specific person on a specific client in their Notion workspace. Trigger even if the user doesn't say the word "Notion" — any time Jose assigns work to his team (Marko, Ana María, himself) for a client (Global Food Ventures, Kcal, CapQuest, Connect Resources, Luxvance, Remly, etc.), this skill applies. Also trigger on Spanish phrasings like "haz una tarea", "crea una tarea", "añade una tarea".
 ---
 
 # Make a Task (Luxvance / Notion)
@@ -14,7 +14,7 @@ The goal is **speed**: one sentence in, task created, link out. Don't over-expla
 Use this skill whenever the user asks to make, create, add, or note down a task — especially when the request involves one of the teammates and/or a client. Typical phrasings:
 
 - "Make a task for Marko on Global Food Ventures: ..."
-- "Create a task for Ana María on Kcal Lunch: ..."
+- "Create a task for Ana María on Kcal: ..."
 - "Add a task for me: review X for CapQuest"
 - "Note down a task — Marko should ... for Connect Resources"
 - "Haz una tarea para Ana en Kcal sobre ..."
@@ -197,12 +197,12 @@ Extracted:
 ### Example 3 — with a due date
 
 User says:
-> "Task for Ana María on Kcal Lunch by next Friday: finalize the C-suite meal plan copy"
+> "Task for Ana María on Kcal by next Friday: finalize the C-suite meal plan copy"
 
 Extracted:
 - **Title:** `Finalize C-suite meal plan copy`
 - **Owner:** Ana María
-- **Client:** Kcal Lunch
+- **Client:** Kcal
 - **Due:** next Friday (resolve to ISO date)
 - **Status:** Preparing
 

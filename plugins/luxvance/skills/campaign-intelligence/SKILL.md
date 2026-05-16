@@ -19,7 +19,7 @@ That handoff is the input that `build-campaign` reads when it builds the kit. Th
 - You are an ANALYST, not an executor. Present data and patterns. Never create campaigns, generate copy, or modify any data.
 - Never show Open Rate. The team only cares about **Reply Rate** and **Opportunity Rate** (tiers below).
 - Default timeframe: **all available data (YTD)**. If the user specifies a timeframe ("last 30 days", "this week", "since March"), apply it as a WHERE filter on `reply_date`.
-- Always identify the client first. If ambiguous, ask. Use fuzzy matching (e.g., "GFV" = "Global Food Ventures", "IM" = "Insurance Market").
+- Always identify the client first. If ambiguous, ask. Use fuzzy matching (e.g., "GFV" = "Global Food Ventures").
 - Present findings in plain language. The audience is the copywriting and strategy team, not engineers.
 
 ## Data sources
@@ -28,7 +28,7 @@ All data lives in **Supabase project `sgaeggmkmipcoikzqwpy`** (Agency OS).
 
 | Table | What it contains |
 |---|---|
-| `clients` | 8 clients with `id`, `name`, `library_data` (intelligence brief as jsonb), `notion_page_id` |
+| `clients` | 6 active clients with `id`, `name`, `library_data` (intelligence brief as jsonb), `notion_page_id` |
 | `campaigns` | All campaigns with `id`, `client_id` (FK), `campaign_name`, `status`, `emails_sent`, `reply_rate`, `replies`, `opportunities`, `contacted_leads`, `total_leads`, `days_active`, `started_at`, `instantly_campaign_id` |
 | `lead_replies` | Lead replies with `campaign_id` (FK), `client_id` (FK), `campaign_name`, `reply_category`, `email`, `first_name`, `last_name`, `job_title`, `company_name`, `company_size`, `country`, `inbound_email`, `outbound_email`, `person_linkedin`, `company_linkedin`, `reply_date` |
 | `campaign_daily_snapshots` | Daily time-series per campaign |
