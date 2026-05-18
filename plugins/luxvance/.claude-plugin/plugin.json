@@ -1,6 +1,6 @@
 {
   "name": "luxvance",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Luxvance's complete cold email agency toolkit. 26 skills for the end-to-end service: strategy and ICP qualification (campaign-intelligence locks the hypothesis from past reply data, campaign-strategy generates 15-25 specific ideas, lead-magnet-brainstorm picks the offer, icp-prompt-builder filters lists), lead sourcing across 5 channels (Apify Apollo, Icypeas, Prospeo, LinkedIn engagers, Google Maps), build-to-launch pipeline with build-campaign 10-block kit + email verification waterfall + list quality grading + per-lead AI personalization + DRAFT push to Instantly, post-launch optimization with cold-email-weekly-rhythm, positive-reply-scoring, experiment-design, deliverability-audit, and deliverability-incident-response, infrastructure ops for Instantly inbox management and Dynadot/Zapmail domain provisioning, always-on spam-word-checker guardrail, plus general agency ops (Notion tasks, branded invoices, brand voice, discovery calls). Anchored on the build-cold-email-campaign orchestrator that chains the 9-phase pipeline end-to-end. v0.5.1 adds explicit tool routing: bcharleson/instantly-cli via npx for bulk operations, MCP for conversational queries, and explicit mcp__execute_sql references for Supabase queries — measurable token savings on fleet-wide audits and bulk uploads. Designed to run alongside the Luxvance Render backend (ramp agent + inbox placement crons + FastAPI webhook ingest).",
   "author": {
     "name": "Luxvance",

@@ -238,25 +238,84 @@ If the campaign is multi-email, Email 2 and Email 3 thread onto Email 1 — thei
 
 ## Sequence spacing defaults
 
-The flow now **asks** the sequence config in Phase 7 (after blocks 1-9 render, before block 10). Default presented to Jose is **Step 1 only**, especially for trigger-based campaigns where we are validating the hook before adding follow-ups.
+The flow **asks** the sequence config in Phase 7 (after blocks 1-9 render, before block 10). Default presented to Jose is **Step 1 only**, especially for trigger-based campaigns where we are validating the hook before adding follow-ups.
 
 When Jose picks 2 or 3 steps, default cadence is:
 - Email 1: day 0
 - Email 2: day +3
 - Email 3: day +6 (i.e. delay_days: 3 after step 2)
 
-Jose can override the cadence ("3, 0/4/8" → delay_days 0 / 4 / 4).
+### HARD RULE — Minimum 3 days between steps (no exceptions)
+
+Every step after Step 1 must wait **at least 3 days** from the previous step. Step 2 fires no earlier than day +3. Step 3 no earlier than 3 days after Step 2. Longer waits (5, 7, 10 days) are fine; shorter are not.
+
+If Jose proposes a cadence shorter than 3 days ("2 steps, day 0 + day +1", "send a reminder tomorrow"), **push back and override to 3-day minimum.** This applies across every Luxvance client — no exceptions. See [`docs/BUILD_A_CAMPAIGN.md`](../../../docs/BUILD_A_CAMPAIGN.md#rule-1--minimum-3-days-between-sequence-steps) for the full rule.
+
+Why: tight cadences feel pushy in B2B and especially in healthcare / executive outreach. 3 days respects the prospect's inbox rhythm. Reply rates degrade measurably on shorter cadences.
 
 Spacing does not appear as a section in the rendered email output (block 3). Email labels carry it implicitly. The numeric `delay_days` lives in block 10 `variants.yaml`.
 
 ## Voice guardrails
 
 Hard floors, not suggestions:
+
 - **No em-dashes.** Use commas, periods, or colons.
 - **CEFR B1-B2 English.** Plain. No buzzwords ("synergies", "leverage", "empower", "unlock", "revolutionary", "game-changer").
 - **Cold email length**: 40 to 120 words for Email 1, 30 to 80 for Email 2, 20 to 60 for Email 3.
 - **Tone blend**: professional + friendly + empathetic + charismatic. Not salesy, not stiff, not cute.
 - **No flattery openings.** "I've been following your work" is banned.
+
+### HARD RULE — No links in Email 1
+
+Email 1 contains **zero links**. No URLs, no hyperlinks, no tracked or untracked anchors. Step 1 must read **completely naturally** as if no link was ever part of the plan.
+
+**Never tell the prospect a link is coming.** Phrases banned in Email 1:
+- "I'll share the menu in a separate note"
+- "I'll follow up with the link"
+- "More details to come"
+
+If the campaign genuinely needs a link to deliver value (Kcal menu page, a calendar booking, a case study), put it in Email 2+ ONLY — and Email 1 must NOT reference its existence.
+
+If no useful link exists for the campaign, Step 2 stays text-only. That is correct, often better than forcing a link.
+
+Why: cold inboxes flag first-touch links as a deliverability risk. The reason is operational only — irrelevant to the prospect — so we never expose it in the copy. See [`docs/BUILD_A_CAMPAIGN.md`](../../../docs/BUILD_A_CAMPAIGN.md#rule-2--zero-links-in-email-1-and-never-mention-ill-send-the-link).
+
+### HARD RULE — Voice: natural English + respectful greetings
+
+#### No "follow up" boilerplate
+
+Banned phrasings (on every step, especially Step 2 openers — they read as templated and scream "cold email"):
+
+- "Just a short follow up on my last note."
+- "A quick follow up on my note from earlier."
+- "Following up on my message from earlier this week."
+- "Just following up."
+- Any variant of "I'm following up on..."
+
+**Use natural reference-to-prior-email phrasing instead:**
+
+- "Did you have the chance to see my email below?"
+- "Did you get the opportunity to see my email below?"
+- "Have you seen my email below?"
+- "Have you had a moment to look at my note below?"
+
+These read like a real human checking in, not template filler.
+
+#### Formal greetings for UAE / medical / executive
+
+For UAE prospects, doctors, and senior professionals — formality matters culturally.
+
+**Use:**
+- "Dear Dr. {{firstName}}"
+- "Hello Dr. {{firstName}}"
+- "Hello Doctor"
+- "Good day Dr. {{firstName}}"
+
+**Avoid "Hi"** — too casual for UAE / medical / executive contexts. Even "Hi Dr." reads under-dressed.
+
+For NAM / EMEA non-medical B2B, "Hello {{firstName}}" is fine. Reserve "Dear" for the most formal contexts (medical, legal, government).
+
+This applies across every Luxvance client when the locked hypothesis flags the audience as UAE, medical, or senior executive. See [`docs/BUILD_A_CAMPAIGN.md`](../../../docs/BUILD_A_CAMPAIGN.md#rule-3--voice-natural-english--respectful-greetings).
 
 ## Copy frameworks (ported from GEX 2026-05-18 audit)
 

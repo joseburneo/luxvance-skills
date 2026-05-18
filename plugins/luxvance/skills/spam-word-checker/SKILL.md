@@ -63,6 +63,50 @@ one more quick follow-up, keep this open, compare notes, compare notes live,
 appreciate the reply
 ```
 
+### Banned "follow up" boilerplate (Luxvance voice rule)
+
+Every variant of "following up" is banned — it reads as templated and is the single most reliable tell that a sequence is automated. Banned across all clients, all steps:
+
+```
+just a short follow up on my last note
+a quick follow up on my note from earlier
+following up on my message from earlier this week
+just following up
+I'm following up on
+following up to see if
+wanted to follow up
+quick follow up
+short follow up
+follow up on my note
+follow up on my email
+```
+
+**Safe replacements** (natural reference-to-prior-email phrasing, especially as Step 2 openers):
+
+- "Did you have the chance to see my email below?"
+- "Did you get the opportunity to see my email below?"
+- "Have you seen my email below?"
+- "Have you had a moment to look at my note below?"
+
+### Banned link-bridge phrases in Email 1 (Luxvance deliverability rule)
+
+Email 1 of a sequence has zero links AND zero references to a link coming later. The following phrases (or anything semantically equivalent) trigger an automatic rewrite of Email 1:
+
+```
+I'll share the menu in a separate note
+I'll follow up with the link
+I'll send the link in a separate note
+the link is coming
+more details to come
+I'll send more info in a moment
+I'll share more in a follow-up
+let me send you the link after this
+```
+
+The copy should read as if no link was ever part of the plan. If a link belongs in the campaign, it goes in Email 2+, and Email 1 must not reference its existence.
+
+See [`docs/BUILD_A_CAMPAIGN.md`](../../../docs/BUILD_A_CAMPAIGN.md#rule-2--zero-links-in-email-1-and-never-mention-ill-send-the-link) for the full rule.
+
 ## High-risk promotional / pressure wording
 
 The full list lives in `references/banned-phrases.md`. Categories covered:
@@ -101,7 +145,12 @@ Full list in `references/banned-phrases.md`.
 - No em-dashes (`—`). Use commas, periods, or colons. This is also enforced by Luxvance brand-guidelines.
 - No ALL CAPS in body text.
 - No multiple exclamation marks (`!!`, `!!!`).
-- No greeting prefix before first name. Banned: `Hi {{firstName}}`, `Hello {{firstName}}`, `Hey {{firstName}}`. The first line should open with the name only or with a situational sentence.
+- **Greeting rules (Luxvance voice):**
+  - **Avoid "Hi" entirely** for UAE / medical / executive audiences. Banned at first contact for these contexts: `Hi {{firstName}}`, `Hi Dr.`, `Hi Doctor`, `Hi there`.
+  - **Avoid "Hey" everywhere** (too casual for any Luxvance audience).
+  - **For UAE / medical / executive:** use `Dear Dr. {{firstName}}`, `Hello Dr. {{firstName}}`, `Hello Doctor`, `Good day Dr. {{firstName}}`. Formal address matches the cultural register.
+  - **For NAM / EMEA non-medical B2B:** `Hello {{firstName}}` is OK. Plain `{{firstName}},` (no prefix) is also OK.
+  - **Never open with flattery** (no "I've been following your work", "huge fan", etc.).
 - No third-person self-references like `[Company] offers...` / `[Company] helps...`. Cold email is first-person.
 - No fake urgency, misleading subject lines, excessive links, or promotional formatting.
 
