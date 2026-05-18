@@ -33,7 +33,7 @@ All data lives in **Supabase project `sgaeggmkmipcoikzqwpy`** (Agency OS).
 | `lead_replies` | Lead replies with `campaign_id` (FK), `client_id` (FK), `campaign_name`, `reply_category`, `email`, `first_name`, `last_name`, `job_title`, `company_name`, `company_size`, `country`, `inbound_email`, `outbound_email`, `person_linkedin`, `company_linkedin`, `reply_date` |
 | `campaign_daily_snapshots` | Daily time-series per campaign |
 
-Use `execute_sql` with `project_id: "sgaeggmkmipcoikzqwpy"`.
+Use **`mcp__e722c133-ad03-40d9-bcc4-684a7fd1ebe0__execute_sql`** with `project_id: "sgaeggmkmipcoikzqwpy"`. Name the tool explicitly so Claude invokes it as a direct tool call instead of generating SQL through reasoning. This saves tokens on every query.
 
 ## Opportunity Rate Tiers
 

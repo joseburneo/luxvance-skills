@@ -86,15 +86,20 @@ Two sources, in order of preference:
 
 ### Source A: Luxvance Supabase `lead_replies` table (preferred)
 
-Project: `sgaeggmkmipcoikzqwpy` (Agency OS).
+Project: `sgaeggmkmipcoikzqwpy` (Agency OS). Tool: **`mcp__e722c133-ad03-40d9-bcc4-684a7fd1ebe0__execute_sql`** with `project_id: "sgaeggmkmipcoikzqwpy"`.
 
 Schema: `campaign_id (FK)`, `client_id (FK)`, `campaign_name`, `reply_category` (currently free-form Luxvance text, NOT the 11-label schema above — this skill RE-classifies), `email`, `first_name`, `last_name`, `job_title`, `company_name`, `company_size`, `country`, `inbound_email`, `outbound_email`, `reply_date`.
 
-The Render cron that ingests Instantly replies into this table runs daily. So all replies up to yesterday are available without hitting the Instantly API.
+The Render cron that ingests Instantly replies into this table runs daily. So all replies up to yesterday are available without hitting the Instantly API at all. This is the most token-efficient path: one SQL query returns everything.
 
 ### Source B: Instantly API direct (fallback)
 
-When the Supabase ingest is stale or the campaign is new and not yet synced. Use the MCP `mcp__instantly-<client>__email_list` with `campaign_id` filter.
+When the Supabase ingest is stale or the campaign is new and not yet synced.
+
+- **Small pull (under 200 replies):** MCP `mcp__instantly-<client>__email_list` with `campaign_id` filter. Single conversational call.
+- **Large pull (200+ replies, or all replies across all campaigns of a workspace for the Wed sweep):** **CLI** `npx instantly-cli email list --campaign-id <id>` wrapped with the per-client `INSTANTLY_API_KEY`. The CLI returns JSON in one stream; MCP would chunk it into many tool calls. See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md).
+
+Default for the Wednesday sweep across all active campaigns: CLI, looped across workspaces.
 
 ## Inputs
 

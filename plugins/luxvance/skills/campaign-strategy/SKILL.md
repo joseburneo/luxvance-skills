@@ -106,7 +106,7 @@ Pull in parallel from ALL of these sources. Skip any that aren't available and s
    - Source: the most recent `campaign-intelligence` conversation OR `profiles/<client>/campaigns/<slug>/intelligence.md` if persisted
    - If campaign-intelligence has NOT been run for this client in the last 14 days, prompt Jose to run it first. Stale intelligence = ideas based on outdated patterns.
 
-2. **`clients.library_data` jsonb** from Supabase project `sgaeggmkmipcoikzqwpy` (Offers, Personas, Segments, Use Cases, Credibility Assets, Brand Guardrails). This is the static client knowledge — what they sell, who they sell to, what they will not say.
+2. **`clients.library_data` jsonb** from Supabase project `sgaeggmkmipcoikzqwpy` (Offers, Personas, Segments, Use Cases, Credibility Assets, Brand Guardrails). Access via **`mcp__e722c133-ad03-40d9-bcc4-684a7fd1ebe0__execute_sql`** with that `project_id`. This is the static client knowledge — what they sell, who they sell to, what they will not say.
 
 3. **Recent Fireflies client calls** (last 60-90 days) — see "Fireflies client-call analysis" section below for the detailed extraction protocol.
 

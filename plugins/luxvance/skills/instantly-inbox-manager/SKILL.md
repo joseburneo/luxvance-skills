@@ -200,9 +200,11 @@ In Instantly campaign body, end with `%signature%` (or the equivalent Instantly 
    Otherwise, rotate from insurance.
 ```
 
-## Per-workspace MCP routing
+## Per-workspace routing: MCP for conversational, CLI for bulk
 
-Luxvance has 6 Instantly workspaces, each with its own MCP namespace:
+Luxvance has 6 Instantly workspaces. There are two ways to reach each, and the right choice depends on the operation size.
+
+### MCP (use for single queries + conversational work)
 
 - `mcp__instantly-luxvance__*`
 - `mcp__instantly-capquest__*`
@@ -211,7 +213,46 @@ Luxvance has 6 Instantly workspaces, each with its own MCP namespace:
 - `mcp__instantly-gfv__*`
 - `mcp__instantly-remly__*`
 
-When Jose asks "show CapQuest", the skill uses `mcp__instantly-capquest__accounts_list`. Each workspace is queried independently — never mix metrics across clients.
+When Jose asks "show me CapQuest's blocked inboxes", use `mcp__instantly-capquest__accounts_list` with a status filter. One call, small JSON, Claude reasons over it inline. Cheap.
+
+### CLI (use for bulk operations — over 20 inboxes OR fleet-wide queries)
+
+Use [`bcharleson/instantly-cli`](https://github.com/bcharleson/instantly-cli) via `npx` (zero install). Full quick reference at [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md).
+
+The CLI reads a single `INSTANTLY_API_KEY` env var. Wrap each call with the per-client key from `credentials/master.env`:
+
+```bash
+# Example: bulk tag 30 CapQuest inboxes as "retired"
+INSTANTLY_API_KEY=$(grep '^INSTANTLY_API_KEY_CAPQUEST=' /Users/joseburneo/Luxvance_OS/credentials/master.env | cut -d= -f2) \
+  npx instantly-cli accounts update --account-ids "id1,id2,...,id30" --tags "retired"
+
+# Example: fleet-wide list of all blocked inboxes across all 6 workspaces
+for client in luxvance capquest kcal connect_resource global_food_ventures remly; do
+  key_var="INSTANTLY_API_KEY_$(echo $client | tr '[:lower:]' '[:upper:]')"
+  key=$(grep "^${key_var}=" /Users/joseburneo/Luxvance_OS/credentials/master.env | cut -d= -f2)
+  echo "=== $client ==="
+  INSTANTLY_API_KEY="$key" npx instantly-cli accounts list --json | jq '.[] | select(.is_blocked == true) | {email, domain}'
+done
+```
+
+**Rule of thumb:**
+- 1-20 inboxes, conversational → MCP
+- 20+ inboxes, scripted, or fleet-wide → CLI
+- Same per-workspace key, never mix across clients.
+
+### Operation → tool mapping
+
+| Operation | Tool | Why |
+|---|---|---|
+| "Show me unhealthy CapQuest inboxes" (Jose asking in chat) | MCP `accounts_list` filter on warmup_score | Conversational, single workspace, small result |
+| Bulk tag rotation (50 inboxes insurance → active) | CLI `accounts update --account-ids "..." --tags active` | Bulk write, one shell call |
+| Bulk warmup config change (40 inboxes new → 15/day insurance config) | CLI `accounts warmup-enable --account-ids "..." --warmup-per-day 15` | Bulk write |
+| Bulk signature set (all CapQuest active) | CLI `accounts update --tags active --signature "..."` | Bulk write |
+| Weekly fleet health snapshot for `cold-email-weekly-rhythm` | CLI loop across 6 workspaces, emit single CSV | Fleet read |
+| 1% rule retire detector | CLI `analytics daily-account --start <60d ago>` + jq filter | Bulk read, aggregation in shell |
+| "Pause this one inbox right now" | MCP `accounts_pause` | Single write, conversational urgency |
+| Inbox-placement test launch (already runs as Render cron) | NEITHER — `inbox_placement.py` owns it | Don't duplicate the cron |
+| Daily ramp (already runs as Render cron) | NEITHER — `ramp_agent.py` owns it | Don't duplicate the cron |
 
 ## What this skill writes (and what it doesn't)
 

@@ -46,15 +46,19 @@ If Luxvance's positive_reply_rate is dropping and Jose does not know why, start 
 
 ## What it checks
 
-| Layer | What | How |
+| Layer | What | How (efficient default) |
 |---|---|---|
-| DNS auth | SPF, DKIM, DMARC present on each sending domain | `dig` commands (read-only) |
-| Inbox health | Warmup status, reputation, blocked accounts, connection failures | Instantly `mcp__instantly-<client>__accounts_list` |
-| Volume health | Daily sent trending, capacity utilization | Instantly `mcp__instantly-<client>__analytics_daily_account` |
-| Send + reply rate per inbox | Sent count, reply count, reply rate over lookback period | Instantly `mcp__instantly-<client>__analytics_campaign` |
-| Bounce rate | Per-inbox and per-domain bounce rate over last 30 days | Instantly analytics |
-| Spam placement (monthly only) | Real inbox-vs-spam test | Instantly seed inboxes OR GlockApps |
-| Inbox type comparison | Reply / bounce per type (G Suite / Office365 / SMTP) | Instantly analytics, grouped by `provider_code` |
+| DNS auth | SPF, DKIM, DMARC present on each sending domain | `dig` commands (local, read-only) |
+| Inbox health | Warmup status, reputation, blocked accounts, connection failures | **CLI** `npx instantly-cli accounts list --json` per workspace (fleet read, bulk) |
+| Volume health | Daily sent trending, capacity utilization | **CLI** `npx instantly-cli analytics daily-account --start <date>` (bulk read) |
+| Send + reply rate per inbox | Sent count, reply count, reply rate over lookback period | **CLI** `npx instantly-cli analytics campaign-overview` + `analytics daily-account` |
+| Bounce rate | Per-inbox and per-domain bounce rate over last 30 days | **CLI** `analytics campaign --id <id>` per campaign, batched |
+| Spam placement (monthly only) | Real inbox-vs-spam test | **CLI** `npx instantly-cli inbox-placement create/get` (single ops, but CLI more scriptable than MCP for the cron) |
+| Inbox type comparison | Reply / bounce per type (G Suite / Office365 / SMTP) | Aggregate the CLI output in shell + jq |
+
+**Tool choice rationale.** This audit runs across **6 workspaces × 50-100 inboxes each = 300-600 inboxes**. Doing this via MCP = 300-600 tool calls = massive token cost. Doing it via CLI = 6 bash calls (one per workspace) that stream small JSON. **The CLI is the right default for this skill.** See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md) for the per-workspace key wrapping pattern.
+
+When Jose asks an ad-hoc one-off question ("is sales@trygrowth.co blocked?"), use MCP. When the Monday audit fires across the whole fleet, use CLI.
 
 ## The 1% rule — core domain-health threshold
 

@@ -23,6 +23,12 @@ The 2026-05-17 session shipped two campaigns into Instantly and then left them r
 
 This skill is the schedule that turns Luxvance from "ship campaigns" into "compounding agency": every Monday catches infrastructure problems, every Wednesday catches positive replies before they go cold, every Friday closes the loop on what worked.
 
+## Efficiency note (CLI vs MCP)
+
+This skill's cadence runs across **all 6 client workspaces** every Monday and Wednesday. That's 6 × ~50 inboxes × multiple metrics = a fleet operation. The skills it invokes (`deliverability-audit`, `positive-reply-scoring`) should default to the **Instantly CLI** (`bcharleson/instantly-cli` via `npx`) for these fleet-wide pulls, not MCP. See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md) for the per-workspace key wrapping pattern.
+
+MCP stays useful for the ad-hoc "Jose pokes one inbox" moments during triage, not for the scheduled rhythm itself.
+
 ## When to use
 
 - Once per Luxvance client, the first time Jose runs cold email for them

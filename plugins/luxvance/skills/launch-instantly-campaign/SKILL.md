@@ -53,9 +53,26 @@ Any column not on the allowed list aborts the upload with a clear error. This is
 
 ## Hard rule: DRAFT only, always
 
-The skill must never call `mcp__instantly-luxvance__campaigns_activate`. Even if Jose explicitly asks "and start it" in the same message, refuse and explain: cold-email launches need a 30-second human review of subject lines, inbox count, lead count, and schedule before going live. The 30 seconds saved by auto-activating is not worth the risk of sending a malformed campaign to 5,000 prospects on the wrong inboxes.
+The skill must never call `mcp__instantly-luxvance__campaigns_activate` (or the CLI equivalent `npx instantly-cli campaigns activate`). Even if Jose explicitly asks "and start it" in the same message, refuse and explain: cold-email launches need a 30-second human review of subject lines, inbox count, lead count, and schedule before going live. The 30 seconds saved by auto-activating is not worth the risk of sending a malformed campaign to 5,000 prospects on the wrong inboxes.
 
 If Jose insists, point him at the Instantly URL printed at the end. He hits Start in the UI in two clicks.
+
+## Efficiency: CLI vs MCP
+
+This skill picks the right tool per phase to minimize tokens:
+
+| Phase | Tool | Why |
+|---|---|---|
+| Phase 1-3 (input validation, confirm shape) | local code, no API | Cheap |
+| Phase 4 campaign create + sequence config | MCP `campaigns_create` | Single call, structured object |
+| Phase 5 attach inboxes by tag | MCP `accounts_list` + filter | Small result, conversational decision (which to pick if too many) |
+| Phase 6 **bulk lead upload** | **CLI `npx instantly-cli leads bulk-add`** | The CLI's bulk-add handles up to 1,000 leads per call. For 2,000+ leads, batching in CSV is way more efficient than N MCP calls. |
+| Phase 7 schedule + settings | MCP `campaigns_update` | Single call |
+| Phase 8 verify DRAFT state | MCP `campaigns_get` | Single read, conversational confirmation |
+
+See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md) for the exact CLI commands and the per-workspace `INSTANTLY_API_KEY` wrapping pattern.
+
+Token impact of the CLI for Phase 6: a 2,566-lead campaign that would have been ~26 MCP calls (100 leads each) becomes 3 CLI calls (1,000 each). The MCP version sends 26× the request JSON through Claude's context; the CLI version sends 3.
 
 ## The flow
 
