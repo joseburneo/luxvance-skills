@@ -25,7 +25,7 @@ This skill is the schedule that turns Luxvance from "ship campaigns" into "compo
 
 ## Efficiency note (CLI vs MCP)
 
-This skill's cadence runs across **all 6 client workspaces** every Monday and Wednesday. That's 6 × ~50 inboxes × multiple metrics = a fleet operation. The skills it invokes (`deliverability-audit`, `positive-reply-scoring`) should default to the **Instantly CLI** (`bcharleson/instantly-cli` via `npx`) for these fleet-wide pulls, not MCP. See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md) for the per-workspace key wrapping pattern.
+This skill's cadence runs across **all 6 client workspaces** every Monday and Wednesday. That's 6 × ~50 inboxes × multiple metrics = a fleet operation. The skills it invokes (`deliverability-audit`, `positive-reply-scoring`) should default to the **Instantly CLI** (`bcharleson/instantly-cli` via `npx`) for these fleet-wide pulls, not MCP. See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../docs/INSTANTLY_CLI_QUICKREF.md) for the per-workspace key wrapping pattern.
 
 MCP stays useful for the ad-hoc "Jose pokes one inbox" moments during triage, not for the scheduled rhythm itself.
 

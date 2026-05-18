@@ -105,7 +105,7 @@ let me send you the link after this
 
 The copy should read as if no link was ever part of the plan. If a link belongs in the campaign, it goes in Email 2+, and Email 1 must not reference its existence.
 
-See [`docs/BUILD_A_CAMPAIGN.md`](../../../docs/BUILD_A_CAMPAIGN.md#rule-2--zero-links-in-email-1-and-never-mention-ill-send-the-link) for the full rule.
+See [`docs/BUILD_A_CAMPAIGN.md`](../../docs/BUILD_A_CAMPAIGN.md#rule-2--zero-links-in-email-1-and-never-mention-ill-send-the-link) for the full rule.
 
 ## High-risk promotional / pressure wording
 

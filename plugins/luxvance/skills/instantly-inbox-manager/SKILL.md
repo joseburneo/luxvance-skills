@@ -217,7 +217,7 @@ When Jose asks "show me CapQuest's blocked inboxes", use `mcp__instantly-capques
 
 ### CLI (use for bulk operations — over 20 inboxes OR fleet-wide queries)
 
-Use [`bcharleson/instantly-cli`](https://github.com/bcharleson/instantly-cli) via `npx` (zero install). Full quick reference at [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md).
+Use [`bcharleson/instantly-cli`](https://github.com/bcharleson/instantly-cli) via `npx` (zero install). Full quick reference at [`docs/INSTANTLY_CLI_QUICKREF.md`](../../docs/INSTANTLY_CLI_QUICKREF.md).
 
 The CLI reads a single `INSTANTLY_API_KEY` env var. Wrap each call with the per-client key from `credentials/master.env`:
 

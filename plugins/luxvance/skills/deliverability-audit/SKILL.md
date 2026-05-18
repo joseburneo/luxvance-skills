@@ -56,7 +56,7 @@ If Luxvance's positive_reply_rate is dropping and Jose does not know why, start 
 | Spam placement (monthly only) | Real inbox-vs-spam test | **CLI** `npx instantly-cli inbox-placement create/get` (single ops, but CLI more scriptable than MCP for the cron) |
 | Inbox type comparison | Reply / bounce per type (G Suite / Office365 / SMTP) | Aggregate the CLI output in shell + jq |
 
-**Tool choice rationale.** This audit runs across **6 workspaces × 50-100 inboxes each = 300-600 inboxes**. Doing this via MCP = 300-600 tool calls = massive token cost. Doing it via CLI = 6 bash calls (one per workspace) that stream small JSON. **The CLI is the right default for this skill.** See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md) for the per-workspace key wrapping pattern.
+**Tool choice rationale.** This audit runs across **6 workspaces × 50-100 inboxes each = 300-600 inboxes**. Doing this via MCP = 300-600 tool calls = massive token cost. Doing it via CLI = 6 bash calls (one per workspace) that stream small JSON. **The CLI is the right default for this skill.** See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../docs/INSTANTLY_CLI_QUICKREF.md) for the per-workspace key wrapping pattern.
 
 When Jose asks an ad-hoc one-off question ("is sales@trygrowth.co blocked?"), use MCP. When the Monday audit fires across the whole fleet, use CLI.
 

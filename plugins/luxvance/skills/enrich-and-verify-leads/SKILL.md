@@ -26,7 +26,7 @@ Takes a CSV or list of email leads, upserts them into the Luxvance Contact Datab
 
 - For non-Luxvance contact databases — this assumes the Supabase project `nbwbauomozeokflntcwa`
 - For verifying a single email — just use `curl` against MillionVerifier directly
-- For bulk re-verifying the entire master DB (456k contacts) — that's ~$275 and explicitly out of scope per [LEAD_ENRICHMENT_PIPELINE.md](../../../docs/LEAD_ENRICHMENT_PIPELINE.md)
+- For bulk re-verifying the entire master DB (456k contacts) — that's ~$275 and explicitly out of scope per [LEAD_ENRICHMENT_PIPELINE.md](../../docs/LEAD_ENRICHMENT_PIPELINE.md)
 
 ## How it works
 
@@ -136,6 +136,6 @@ All scripts use `User-Agent: curl/7.88.1` for MV calls. All use the `bulk-upsert
 
 ## Related
 
-- **Reference doc:** [LEAD_ENRICHMENT_PIPELINE.md](../../../docs/LEAD_ENRICHMENT_PIPELINE.md)
+- **Reference doc:** [LEAD_ENRICHMENT_PIPELINE.md](../../docs/LEAD_ENRICHMENT_PIPELINE.md)
 - **Sibling skill:** `cleanup-completed-campaigns` (frees Instantly slots after sending)
 - **Credentials:** `credentials/master.env`

@@ -97,7 +97,7 @@ The Render cron that ingests Instantly replies into this table runs daily. So al
 When the Supabase ingest is stale or the campaign is new and not yet synced.
 
 - **Small pull (under 200 replies):** MCP `mcp__instantly-<client>__email_list` with `campaign_id` filter. Single conversational call.
-- **Large pull (200+ replies, or all replies across all campaigns of a workspace for the Wed sweep):** **CLI** `npx instantly-cli email list --campaign-id <id>` wrapped with the per-client `INSTANTLY_API_KEY`. The CLI returns JSON in one stream; MCP would chunk it into many tool calls. See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md).
+- **Large pull (200+ replies, or all replies across all campaigns of a workspace for the Wed sweep):** **CLI** `npx instantly-cli email list --campaign-id <id>` wrapped with the per-client `INSTANTLY_API_KEY`. The CLI returns JSON in one stream; MCP would chunk it into many tool calls. See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../docs/INSTANTLY_CLI_QUICKREF.md).
 
 Default for the Wednesday sweep across all active campaigns: CLI, looped across workspaces.
 

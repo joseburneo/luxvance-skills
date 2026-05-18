@@ -447,7 +447,7 @@ If Jose wants a sample render of the final output, render 5 random leads' full e
 
 - **Do not write copy.** That is `build-campaign`. This skill only generates per-lead variables and normalizes names.
 - **Do not skip the iterative QA loop** even when Jose says "just run it". The 30-lead validation has caught prompt errors that would have wasted 2,500 lead generations. If Jose insists, fine — but flag the risk explicitly first.
-- **Do not call the OpenAI API without `OPENAI_API_KEY` from `credentials/master.env`.** Read the key with the Python `with open()` pattern documented in [SESSION_HANDOFF_2026-05-17.md](../../../docs/SESSION_HANDOFF_2026-05-17.md), not via `grep` or `os.environ` (gitignore blocks reads on master.env, and the env var is not auto-loaded).
+- **Do not call the OpenAI API without `OPENAI_API_KEY` from `credentials/master.env`.** Read the key with the Python `with open()` pattern documented in [SESSION_HANDOFF_2026-05-17.md](../../docs/SESSION_HANDOFF_2026-05-17.md), not via `grep` or `os.environ` (gitignore blocks reads on master.env, and the env var is not auto-loaded).
 - **Do not let any column outside the schema leak into the output.** Schema is the contract. The deployer rejects unknown columns.
 - **Default to Sonnet.** Opus is for the rare case where Jose says "máxima calidad". OpenAI is for A/B comparison, not the primary path.
 - **One subagent per batch, not one per lead.** Per-lead subagents are 100x more expensive and slower. A subagent can process 800-1,000 leads in one prompt.

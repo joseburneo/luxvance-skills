@@ -249,7 +249,7 @@ When Jose picks 2 or 3 steps, default cadence is:
 
 Every step after Step 1 must wait **at least 3 days** from the previous step. Step 2 fires no earlier than day +3. Step 3 no earlier than 3 days after Step 2. Longer waits (5, 7, 10 days) are fine; shorter are not.
 
-If Jose proposes a cadence shorter than 3 days ("2 steps, day 0 + day +1", "send a reminder tomorrow"), **push back and override to 3-day minimum.** This applies across every Luxvance client — no exceptions. See [`docs/BUILD_A_CAMPAIGN.md`](../../../docs/BUILD_A_CAMPAIGN.md#rule-1--minimum-3-days-between-sequence-steps) for the full rule.
+If Jose proposes a cadence shorter than 3 days ("2 steps, day 0 + day +1", "send a reminder tomorrow"), **push back and override to 3-day minimum.** This applies across every Luxvance client — no exceptions. See [`docs/BUILD_A_CAMPAIGN.md`](../../docs/BUILD_A_CAMPAIGN.md#rule-1--minimum-3-days-between-sequence-steps) for the full rule.
 
 Why: tight cadences feel pushy in B2B and especially in healthcare / executive outreach. 3 days respects the prospect's inbox rhythm. Reply rates degrade measurably on shorter cadences.
 
@@ -278,7 +278,7 @@ If the campaign genuinely needs a link to deliver value (Kcal menu page, a calen
 
 If no useful link exists for the campaign, Step 2 stays text-only. That is correct, often better than forcing a link.
 
-Why: cold inboxes flag first-touch links as a deliverability risk. The reason is operational only — irrelevant to the prospect — so we never expose it in the copy. See [`docs/BUILD_A_CAMPAIGN.md`](../../../docs/BUILD_A_CAMPAIGN.md#rule-2--zero-links-in-email-1-and-never-mention-ill-send-the-link).
+Why: cold inboxes flag first-touch links as a deliverability risk. The reason is operational only — irrelevant to the prospect — so we never expose it in the copy. See [`docs/BUILD_A_CAMPAIGN.md`](../../docs/BUILD_A_CAMPAIGN.md#rule-2--zero-links-in-email-1-and-never-mention-ill-send-the-link).
 
 ### HARD RULE — Voice: natural English + respectful greetings
 
@@ -315,7 +315,7 @@ For UAE prospects, doctors, and senior professionals — formality matters cultu
 
 For NAM / EMEA non-medical B2B, "Hello {{firstName}}" is fine. Reserve "Dear" for the most formal contexts (medical, legal, government).
 
-This applies across every Luxvance client when the locked hypothesis flags the audience as UAE, medical, or senior executive. See [`docs/BUILD_A_CAMPAIGN.md`](../../../docs/BUILD_A_CAMPAIGN.md#rule-3--voice-natural-english--respectful-greetings).
+This applies across every Luxvance client when the locked hypothesis flags the audience as UAE, medical, or senior executive. See [`docs/BUILD_A_CAMPAIGN.md`](../../docs/BUILD_A_CAMPAIGN.md#rule-3--voice-natural-english--respectful-greetings).
 
 ## Copy frameworks (ported from GEX 2026-05-18 audit)
 

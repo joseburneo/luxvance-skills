@@ -312,7 +312,7 @@ Both APIs accept a single email-lookup request per call. Batch via 20 workers.
 - Auth: `X-KEY: {PROSPEO_API_KEY}` (if available — check master.env)
 - Body: `{"first_name": "...", "last_name": "...", "company": "..."}`
 
-Read keys with the Python `with open()` pattern documented in [SESSION_HANDOFF_2026-05-17.md](../../../docs/SESSION_HANDOFF_2026-05-17.md).
+Read keys with the Python `with open()` pattern documented in [SESSION_HANDOFF_2026-05-17.md](../../docs/SESSION_HANDOFF_2026-05-17.md).
 
 ### Phase 4: Collect and filter
 

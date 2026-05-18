@@ -70,7 +70,7 @@ This skill picks the right tool per phase to minimize tokens:
 | Phase 7 schedule + settings | MCP `campaigns_update` | Single call |
 | Phase 8 verify DRAFT state | MCP `campaigns_get` | Single read, conversational confirmation |
 
-See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../../docs/INSTANTLY_CLI_QUICKREF.md) for the exact CLI commands and the per-workspace `INSTANTLY_API_KEY` wrapping pattern.
+See [`docs/INSTANTLY_CLI_QUICKREF.md`](../../docs/INSTANTLY_CLI_QUICKREF.md) for the exact CLI commands and the per-workspace `INSTANTLY_API_KEY` wrapping pattern.
 
 Token impact of the CLI for Phase 6: a 2,566-lead campaign that would have been ~26 MCP calls (100 leads each) becomes 3 CLI calls (1,000 each). The MCP version sends 26× the request JSON through Claude's context; the CLI version sends 3.
 
