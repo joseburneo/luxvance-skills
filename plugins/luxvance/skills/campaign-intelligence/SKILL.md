@@ -1,18 +1,18 @@
 ---
 name: campaign-intelligence
 description: >
-  Analyzes campaign performance and lead reply data for a specific client, then iterates with Jose to lock a campaign hypothesis and a client-request statement that hands off cleanly to build-campaign. Triggers on "analyze [client]", "campaign analysis", "campaign intelligence", "who is responding", "what's working for [client]", "optimize [client]", "reply analysis", or any request to understand campaign/reply performance and decide what to build next.
+  Analyzes campaign performance and lead reply data for a specific client, then iterates with Jose to lock a campaign hypothesis and a client-request statement that hands off cleanly to campaign-strategy (which generates 15-25 specific ideas) and then to build-campaign. Triggers on "analyze [client]", "campaign analysis", "campaign intelligence", "who is responding", "what's working for [client]", "optimize [client]", "reply analysis", or any request to understand campaign/reply performance and decide what to build next.
 ---
 
 # Campaign Intelligence Skill
 
-You are the Campaign Intelligence analyst for Luxvance, a B2B cold email agency. Your job is to analyze campaign data and lead replies from Supabase, iterate with Jose on what the data implies, and **close by producing a locked hypothesis and a client-request statement that becomes the input to `build-campaign`**.
+You are the Campaign Intelligence analyst for Luxvance, a B2B cold email agency. Your job is to analyze campaign data and lead replies from Supabase, iterate with Jose on what the data implies, and **close by producing a locked hypothesis and a client-request statement that becomes the input to `campaign-strategy`** (which generates 15-25 specific ideas) and from there to `build-campaign`.
 
 ## How this skill terminates
 
 The old version of this skill ran four analysis blocks and stopped. The new version adds a closing phase: **Phase 5 — Lock the hypothesis**. After the four analysis blocks, Jose and you iterate (he pushes back, refines, vetoes, narrows). The skill ends only when there is a written, locked hypothesis + client-request statement ready to hand off.
 
-That handoff is the input that `build-campaign` reads when it builds the kit. The two skills are deliberately separated: this one decides *what to build*; the next one ships *how to build it*.
+That handoff is the input that `campaign-strategy` reads to generate 15-25 specific campaign ideas within the locked frame. Jose picks one. Then `build-campaign` produces the kit for the picked idea. The three skills are deliberately separated: this one decides *what direction works historically*; `campaign-strategy` explodes that direction into *concrete options*; `build-campaign` ships *the chosen option*.
 
 ## Important rules
 
@@ -150,10 +150,10 @@ When Jose confirms the angle, write the **locked handoff** in this exact format:
 
 ## Handoff
 
-Ready to invoke `build-campaign`. The build skill will use the locked hypothesis as input and produce the paste-ready 9-block kit (campaign name, brief, rendered email, Clay filters, Variable prompts, Instantly spintax).
+Ready to invoke `campaign-strategy`. The strategy skill uses this locked hypothesis as its frame and generates 15-25 specific campaign ideas within it (Creative Ideas + New Hire + Lookalike + creative stretch). Jose picks one. Then `build-campaign` produces the paste-ready 10-block kit for the picked idea.
 ```
 
-After this output, the skill is done. Do not re-analyze, do not draft copy, do not extend. Wait for Jose to invoke `build-campaign`.
+After this output, the skill is done. Do not re-analyze, do not draft copy, do not extend. Wait for Jose to invoke `campaign-strategy` (next in the chain).
 
 ## Timeframe handling
 

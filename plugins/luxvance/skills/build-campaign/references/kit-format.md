@@ -224,6 +224,59 @@ If multi-email is requested, add `### Email 2 body` and `### Email 3 body` sub-s
 
 For Email 3, add this note above the code fence: "Forbidden in Email 3: last chance, final, removing you, bumping, checking in."
 
+### Block 10. variants.yaml
+
+The machine-readable mirror of blocks 1, 8 and 9 plus a default schedule, ready for `launch-instantly-campaign` to consume. Code fence with `yaml` language hint.
+
+This block is mandatory. The deployer reads it directly; if it is absent or malformed, the campaign cannot launch via MCP and Jose has to paste manually into Instantly (defeating the point of the new pipeline).
+
+Schema is documented in `launch-instantly-campaign/references/variants-schema.yaml`. Quick reference:
+
+- `name`: same string as block 1.
+- `schedule`: timezone, days, start_hour/end_hour, min_time_btw_emails, max_leads_per_day. Default to the prospect region's timezone; M-F if NAM/EMEA/LATAM, Sun-Thu (`[7,1,2,3,4]`) if GCC.
+- `inbox_selection.tag`: the Instantly tag for the sending account pool. Default `active`.
+- `inbox_selection.count`: number of inboxes to attach. Default 20.
+- `sequences[].variants[].subject`: same line as block 8 (subject spintax).
+- `sequences[].variants[].body`: same body as block 9 (body spintax), with `\n` for line breaks.
+
+**Critical:** the body field must match block 9 byte-for-byte (after newline serialization). Same `{{RANDOM|...}}` spintax, same `{{firstName}}` / `{{Variable 1}}` merge fields, same order. If they diverge, the deployer either fails validation or sends the wrong copy.
+
+**Syntax reminder:** Instantly spintax is `{{RANDOM|a|b|c}}` (double curly braces, RANDOM keyword), NOT Smartlead's `{a|b|c}`. Merge fields are `{{firstName}}`, `{{companyName}}`, `{{Variable 1}}`, etc., using the existing Luxvance Instantly naming. Block 10 preserves all of this verbatim from blocks 8 and 9.
+
+By default, emit a SINGLE variant A for Step 1 only (the Luxvance default is Step 1 trigger-based campaigns, validated before adding follow-ups). When Jose explicitly asks for A/B/C testing or for the full sequence, expand variants and steps accordingly. Each step's variant body must match the corresponding `### Email N body` block.
+
+Shape:
+
+```
+## variants.yaml
+
+\`\`\`yaml
+name: "Luxvance - [Region] - [Persona] - [Trigger] - W[ISO week]"
+
+schedule:
+  timezone: [region timezone, IANA]
+  days: [days array]
+  start_hour: "08:00"
+  end_hour: "17:00"
+  min_time_btw_emails: 10
+  max_leads_per_day: 30
+
+inbox_selection:
+  tag: active
+  count: 20
+
+sequences:
+  - step: 1
+    delay_days: 0
+    variants:
+      - label: A
+        subject: "[same as block 8]"
+        body: "[same as block 9, with \\n for line breaks]"
+\`\`\`
+```
+
+If the schedule timezone is GCC, set `days: [7, 1, 2, 3, 4]` (Sun-Thu) and pick `Asia/Dubai`. NAM defaults to `America/New_York`. EMEA continental defaults to `Europe/Brussels`. LATAM defaults to `America/Bogota`. The copywriter is responsible for picking the right region.
+
 ## Multi-option delivery (Phase 4 Path B)
 
 Before Jose picks an option, render three mini-versions. Each mini includes only:

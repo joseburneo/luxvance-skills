@@ -24,7 +24,16 @@ import time
 from pathlib import Path
 from typing import Optional
 
-ROOT = Path(__file__).resolve().parent.parent
+def _find_workspace_root(start: Path) -> Path:
+    """Walk up from `start` until we find a directory containing credentials/master.env."""
+    p = start.resolve()
+    for parent in [p, *p.parents]:
+        if (parent / "credentials" / "master.env").exists():
+            return parent
+    raise SystemExit(f"could not find credentials/master.env walking up from {start}")
+
+
+ROOT = _find_workspace_root(Path(__file__).parent)
 MASTER_ENV = ROOT / "credentials" / "master.env"
 CLI = os.path.expanduser("~/.npm-global/bin/instantly")
 API_BASE = "https://api.instantly.ai/api/v2"
