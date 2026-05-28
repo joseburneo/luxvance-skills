@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Run Million Verifier on a list of emails and update the Contact Database.
+"""Run Million Verifier on a list of emails and update the Luxvance master.
+
+Migrated 2026-05-28: destination is now `core.contacts` in Agency OS, called
+via the `upsert_master_contacts` RPC. See bulk_upsert_to_supabase.py for the
+contract.
 
 Usage:
     MILLIONVERIFIER_API_KEY=... \
-    SUPABASE_ANON_KEY_CONTACT_DB=... \
+    SUPABASE_SERVICE_KEY=... \
+    SUPABASE_URL=https://sgaeggmkmipcoikzqwpy.supabase.co \
         python3 run_million_verifier.py /path/to/emails.json [--workers 20]
 
 Input JSON is a flat array of email strings: ["a@b.com", "c@d.com", ...]
@@ -20,11 +25,12 @@ p.add_argument("--no-upsert", action="store_true", help="Skip writing results ba
 args = p.parse_args()
 
 MV_KEY = os.environ.get("MILLIONVERIFIER_API_KEY")
-ANON_KEY = os.environ.get("SUPABASE_ANON_KEY_CONTACT_DB") or os.environ.get("SUPABASE_ANON_KEY")
+SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
+SUPABASE_URL = (os.environ.get("SUPABASE_URL") or "").rstrip("/")
 if not MV_KEY:
     sys.exit("ERROR: set MILLIONVERIFIER_API_KEY")
-if not args.no_upsert and not ANON_KEY:
-    sys.exit("ERROR: set SUPABASE_ANON_KEY_CONTACT_DB (or pass --no-upsert)")
+if not args.no_upsert and (not SERVICE_KEY or not SUPABASE_URL):
+    sys.exit("ERROR: set SUPABASE_URL and SUPABASE_SERVICE_KEY (or pass --no-upsert)")
 
 with open(args.emails_json) as f:
     emails = json.load(f)
@@ -100,13 +106,13 @@ for r in results:
         "email_verified_by": "million_verifier",
     })
 
-FN_URL = "https://nbwbauomozeokflntcwa.supabase.co/functions/v1/bulk-upsert-contacts"
+FN_URL = f"{SUPABASE_URL}/rest/v1/rpc/upsert_master_contacts"
 total = 0
 for i in range(0, len(payload), 2000):
     chunk = payload[i:i+2000]
-    req = urllib.request.Request(FN_URL, data=json.dumps(chunk).encode(), method="POST", headers={
-        "Authorization": f"Bearer {ANON_KEY}",
-        "apikey": ANON_KEY,
+    req = urllib.request.Request(FN_URL, data=json.dumps({"payload": chunk}).encode(), method="POST", headers={
+        "Authorization": f"Bearer {SERVICE_KEY}",
+        "apikey": SERVICE_KEY,
         "Content-Type": "application/json",
     })
     with urllib.request.urlopen(req, timeout=120) as resp:

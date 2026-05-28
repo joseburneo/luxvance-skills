@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Run BounceBan on catch_all emails (specialized for catch-all servers).
 
+Migrated 2026-05-28: destination is now `core.contacts` in Agency OS via
+the `upsert_master_contacts` RPC.
+
 Usage:
     BOUNCEBAN_API_KEY=... \
-    SUPABASE_ANON_KEY_CONTACT_DB=... \
+    SUPABASE_SERVICE_KEY=... \
+    SUPABASE_URL=https://sgaeggmkmipcoikzqwpy.supabase.co \
         python3 run_bounceban.py /path/to/catch_all_emails.json [--workers 20]
 
 Run this AFTER Million Verifier, only on the catch_all subset. BounceBan is
@@ -21,11 +25,12 @@ p.add_argument("--no-upsert", action="store_true")
 args = p.parse_args()
 
 BB_KEY = os.environ.get("BOUNCEBAN_API_KEY")
-ANON_KEY = os.environ.get("SUPABASE_ANON_KEY_CONTACT_DB") or os.environ.get("SUPABASE_ANON_KEY")
+SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
+SUPABASE_URL = (os.environ.get("SUPABASE_URL") or "").rstrip("/")
 if not BB_KEY:
     sys.exit("ERROR: set BOUNCEBAN_API_KEY")
-if not args.no_upsert and not ANON_KEY:
-    sys.exit("ERROR: set SUPABASE_ANON_KEY_CONTACT_DB (or pass --no-upsert)")
+if not args.no_upsert and (not SERVICE_KEY or not SUPABASE_URL):
+    sys.exit("ERROR: set SUPABASE_URL and SUPABASE_SERVICE_KEY (or pass --no-upsert)")
 
 with open(args.emails_json) as f:
     emails = json.load(f)
@@ -94,13 +99,13 @@ payload = [{
     "email_verified_by": "bounceban",
 } for r in results if r.get("result") not in (None, "error")]
 
-FN_URL = "https://nbwbauomozeokflntcwa.supabase.co/functions/v1/bulk-upsert-contacts"
+FN_URL = f"{SUPABASE_URL}/rest/v1/rpc/upsert_master_contacts"
 total = 0
 for i in range(0, len(payload), 2000):
     chunk = payload[i:i+2000]
-    req = urllib.request.Request(FN_URL, data=json.dumps(chunk).encode(), method="POST", headers={
-        "Authorization": f"Bearer {ANON_KEY}",
-        "apikey": ANON_KEY,
+    req = urllib.request.Request(FN_URL, data=json.dumps({"payload": chunk}).encode(), method="POST", headers={
+        "Authorization": f"Bearer {SERVICE_KEY}",
+        "apikey": SERVICE_KEY,
         "Content-Type": "application/json",
     })
     with urllib.request.urlopen(req, timeout=120) as resp:

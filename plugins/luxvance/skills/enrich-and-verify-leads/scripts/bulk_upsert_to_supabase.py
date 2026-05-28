@@ -1,24 +1,25 @@
 #!/usr/bin/env python3
-"""Bulk-UPSERT a CSV of leads to the Luxvance Contact Database.
+"""Bulk-UPSERT a CSV of leads into the Luxvance master (Agency OS core.contacts).
+
+Migrated 2026-05-28 from the old Contact DB project (`nbwbauomozeokflntcwa`).
+The destination is now `core.contacts` inside Agency OS, called via the
+`public.upsert_master_contacts(jsonb)` RPC. Same payload shape, same response
+contract {processed, errors}. The RPC handles the schema transformation
+(industry → primary_industry, linkedin_url → linkedin_profile, etc.) and the
+verified_by mapping (apollo/manual → NULL).
 
 Usage:
-    SUPABASE_ANON_KEY_CONTACT_DB=eyJ... \
+    SUPABASE_SERVICE_KEY=... \
+    SUPABASE_URL=https://sgaeggmkmipcoikzqwpy.supabase.co \
         python3 bulk_upsert_to_supabase.py /path/to/leads.csv
-
-CSV must have an 'email' column. Other recognized columns (any subset):
-    firstName, lastName, phone, companyName, title, companyIndustry,
-    personCity, personCountry, companyDomain, linkedinUrl, emailStatus
-
-If 'emailStatus' is 'deliverable' or 'verified' (from Apollo), it's saved as-is
-but with email_verified_by='apollo' and email_verified_at=now() — meaning the
-MillionVerifier waterfall will still re-verify these later if they're stale.
 """
 import csv, json, os, sys, urllib.request, urllib.error
 from datetime import datetime, timezone
 
-ANON_KEY = os.environ.get("SUPABASE_ANON_KEY_CONTACT_DB") or os.environ.get("SUPABASE_ANON_KEY")
-if not ANON_KEY:
-    print("ERROR: set SUPABASE_ANON_KEY_CONTACT_DB (or SUPABASE_ANON_KEY) env var", file=sys.stderr)
+SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_KEY")
+SUPABASE_URL = (os.environ.get("SUPABASE_URL") or "").rstrip("/")
+if not SERVICE_KEY or not SUPABASE_URL:
+    print("ERROR: set SUPABASE_URL and SUPABASE_SERVICE_KEY env vars", file=sys.stderr)
     sys.exit(1)
 
 if len(sys.argv) < 2:
@@ -26,7 +27,7 @@ if len(sys.argv) < 2:
     sys.exit(1)
 
 CSV_PATH = sys.argv[1]
-FN_URL = "https://nbwbauomozeokflntcwa.supabase.co/functions/v1/bulk-upsert-contacts"
+FN_URL = f"{SUPABASE_URL}/rest/v1/rpc/upsert_master_contacts"
 
 # Column-name flexibility — accept both Apify/Apollo and snake_case
 COL_MAP = {
@@ -92,11 +93,11 @@ def upsert(rows, chunk_size=2000):
         chunk = payload[i:i+chunk_size]
         req = urllib.request.Request(
             FN_URL,
-            data=json.dumps(chunk).encode("utf-8"),
+            data=json.dumps({"payload": chunk}).encode("utf-8"),
             method="POST",
             headers={
-                "Authorization": f"Bearer {ANON_KEY}",
-                "apikey": ANON_KEY,
+                "Authorization": f"Bearer {SERVICE_KEY}",
+                "apikey": SERVICE_KEY,
                 "Content-Type": "application/json",
             },
         )

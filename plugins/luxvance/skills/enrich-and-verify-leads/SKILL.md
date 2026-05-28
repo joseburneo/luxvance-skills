@@ -77,9 +77,14 @@ CSV/list of leads
 |---|---|
 | `MILLIONVERIFIER_API_KEY` | Primary email verifier |
 | `BOUNCEBAN_API_KEY` | Catch-all resolver |
-| `SUPABASE_ANON_KEY_CONTACT_DB` | Authenticate to Contact Database edge functions |
+| `SUPABASE_URL` | Agency OS project URL (https://sgaeggmkmipcoikzqwpy.supabase.co) |
+| `SUPABASE_SERVICE_KEY` | Bypasses RLS to call the master-upsert RPC |
 
-The anon key for the Contact Database project lives at `https://supabase.com/dashboard/project/nbwbauomozeokflntcwa/settings/api-keys/legacy`. If `SUPABASE_ANON_KEY_CONTACT_DB` isn't set in `master.env`, ask the user to paste it once and add it.
+Migrated 2026-05-28 from the standalone Contact Database (`nbwbauomozeokflntcwa`).
+All scripts now POST to the `upsert_master_contacts(jsonb)` RPC inside Agency OS
+which writes to `core.contacts` after the canonical field transforms (industry
+→ primary_industry, linkedin_url → linkedin_profile, verified_by mapped to
+MV/BB or NULL).
 
 ## Workflow
 
@@ -89,9 +94,8 @@ The anon key for the Contact Database project lives at `https://supabase.com/das
 # 1. Validate CSV has required columns (email at minimum)
 python3 scripts/validate_csv.py /path/to/leads.csv
 
-# 2. UPSERT to master DB
-SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY_CONTACT_DB \
-  python3 scripts/bulk_upsert_to_supabase.py /path/to/leads.csv
+# 2. UPSERT to master DB (Agency OS core.contacts via RPC)
+python3 scripts/bulk_upsert_to_supabase.py /path/to/leads.csv
 
 # 3. Run waterfall on unverified or stale leads
 python3 scripts/run_waterfall.py --source-batch "$(basename /path/to/leads.csv .csv)"
@@ -126,7 +130,7 @@ python3 scripts/refresh_stale_for_icp.py \
 | `scripts/refresh_stale_for_icp.py` | Lazy verify: pull ICP candidates, refresh stale ones, output deliverable CSV |
 | `scripts/export_for_instantly.py` | Export `contacts_for_send` to Instantly-shaped CSV |
 
-All scripts use `User-Agent: curl/7.88.1` for MV calls. All use the `bulk-upsert-contacts` edge function for writes (bypasses RLS safely).
+All scripts use `User-Agent: curl/7.88.1` for MV calls. All use the `upsert_master_contacts` RPC in Agency OS for writes (security_definer bypasses RLS safely).
 
 ## Cost estimates
 
