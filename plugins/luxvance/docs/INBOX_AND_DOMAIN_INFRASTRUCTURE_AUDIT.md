@@ -1,5 +1,7 @@
 # Inbox + Domain Infrastructure Audit
 
+> Auditoría histórica (mayo 2026). La parte de skills está retirada; proceso vigente: `docs/CAMPAIGN_BUILDING.md`. La parte de infraestructura sigue siendo referencia útil.
+
 **Date:** 2026-05-18
 **Owner:** Jose
 **Purpose:** Before building new inbox-manager and domain-setup skills inspired by Growth Engine X, audit what Luxvance already has in production code so we tropicalize cleanly instead of duplicating.
