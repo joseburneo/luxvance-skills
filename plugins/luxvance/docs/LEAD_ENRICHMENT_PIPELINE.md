@@ -1,5 +1,7 @@
 # Lead Enrichment Pipeline
 
+> **⚠️ SUPERSEDED 2026-05-31.** The standalone Contact DB project (`nbwbauomozeokflntcwa`) was deleted in the Supabase consolidation. The master now lives in Agency OS `core.contacts` (`sgaeggmkmipcoikzqwpy`). For the current flow see [`docs/sops/lead-flow-supabase.md`](../sops/lead-flow-supabase.md). Sections below referencing the old project / `bulk-upsert-contacts` edge function are historical.
+
 Reference doc for how Luxvance scrapes, verifies, stores, and pushes B2B leads from raw Apollo data to a deliverable-only campaign-ready list.
 
 **Owner:** Jose

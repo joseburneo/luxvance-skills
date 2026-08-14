@@ -1,5 +1,7 @@
 # Cold Email Campaign Pipeline
 
+> **⚠️ SUPERSEDED 2026-05-31.** The standalone Contact DB project (`nbwbauomozeokflntcwa`) was deleted in the Supabase consolidation. The master now lives in Agency OS `core.contacts` (`sgaeggmkmipcoikzqwpy`). For the current flow see [`docs/sops/lead-flow-supabase.md`](../sops/lead-flow-supabase.md). Sections below referencing the old project / `bulk-upsert-contacts` edge function are historical.
+
 Umbrella reference for how Luxvance ships a cold email campaign end-to-end without Clay, from past-performance analysis to a DRAFT campaign sitting in Instantly. Six skills, four data files, one orchestrator (planned).
 
 **Owner:** Jose
